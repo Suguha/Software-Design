@@ -7,10 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.sysu.edgar.beethoven.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Edgar on 2016/7/6.
@@ -25,6 +30,8 @@ public class Search_movies_fragment extends Fragment {
             "2000-2010", "90年代", "80年代", "70年代", "更早"};
     private String[] btns_bnh = new String[] {"好评", "最新", "热门"};
     private Button[] last_clicks = new Button[] {null, null, null, null};
+
+    private ArrayList<HashMap<String, Object>> dataArrayList = new ArrayList<HashMap<String, Object>>();
 
     @Nullable
     @Override
@@ -43,6 +50,22 @@ public class Search_movies_fragment extends Fragment {
         LinearLayout linearLayout_4 = (LinearLayout)view.findViewById(R.id.filter_bnh);
         setButtonText(getContext(), linearLayout_4, btns_bnh, 3);
 
+        ListView listView = (ListView)view.findViewById(R.id.search_movies_listview);
+        getData();
+        MySimpleAdapter simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.hot_movies_listview_layout,
+                new String[] {"ItemImage", "ItemTitle", "ItemText", "ItemNum"}, new int[] {R.id.movie_image, R.id.movie_title,
+                R.id.movie_score_text, R.id.movie_score_number});
+
+        listView.setAdapter(simpleAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //to goto movie detail activity;
+                String test = "hello " + position;
+                System.out.println(test);
+            }
+        });
         return view;
     }
 
@@ -75,6 +98,20 @@ public class Search_movies_fragment extends Fragment {
                 }
             });
             linearLayout.addView(btn);
+        }
+    }
+
+    private void getData() {
+        dataArrayList.clear();
+
+        //30是测试用的数据，具体情况要根据后台数据改
+        for (int i = 0; i < 30; i++) {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("ItemImage", R.drawable.ic_photo_black_100dp);
+            map.put("ItemTitle", "Title_" + i);
+            map.put("ItemText", "评分：");
+            map.put("ItemNum", 9.6);
+            dataArrayList.add(map);
         }
     }
 
