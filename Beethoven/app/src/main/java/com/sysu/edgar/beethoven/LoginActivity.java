@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 
 /**
- * Created by B402 on 2016/7/6.
+ * Created by Edgar on 2016/7/6.
  */
 public class LoginActivity extends AppCompatActivity {
     private PopupWindow register_pop, login_pop;

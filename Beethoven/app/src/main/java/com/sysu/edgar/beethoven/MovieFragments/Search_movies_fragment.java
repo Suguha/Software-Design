@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.sysu.edgar.beethoven.R;
 
 /**
- * Created by B402 on 2016/7/6.
+ * Created by Edgar on 2016/7/6.
  */
 public class Search_movies_fragment extends Fragment {
 

@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
- * Created by B402 on 2016/7/6.
+ * Created by Edgar on 2016/7/6.
  */
 public class SearchAdaptive extends MainActivity {
     public void hide(RelativeLayout _search_layout, ImageView _separate_line, RelativeLayout.LayoutParams _lp) {

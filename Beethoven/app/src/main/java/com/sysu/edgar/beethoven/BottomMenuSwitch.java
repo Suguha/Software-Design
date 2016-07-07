@@ -3,7 +3,7 @@ package com.sysu.edgar.beethoven;
 import android.widget.ImageButton;
 
 /**
- * Created by B402 on 2016/7/6.
+ * Created by Edgar on 2016/7/6.
  */
 public class BottomMenuSwitch {
     public void movieSelected(MainActivity activity, ImageButton _bottom_btn_movies, ImageButton _bottom_btn_cinemas, ImageButton _bottom_btn_account) {
