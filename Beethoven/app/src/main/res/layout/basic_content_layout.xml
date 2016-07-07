@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:background="@color/white_100">
+
+        <ImageButton android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vec_search_black_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:background="@color/white_100"/>
+
+        <EditText android:id="@+id/search_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="搜索你想要的影片"
+            android:textColorHint="@color/black_26"
+            android:imeOptions="actionSearch"
+            android:layout_toLeftOf="@id/btn_search"
+            android:singleLine="true"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_12"
+            android:layout_alignBottom="@id/search_text"/>
+
+    </RelativeLayout>
+
+    <ImageView android:id="@+id/separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white_100"/>
+
+    <LinearLayout android:id="@+id/switch_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/separate_line"
+        android:gravity="center"
+        android:background="@color/colorAccent">
+
+        <Button android:id="@+id/hot_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/switch_tabs_selector"
+            android:text="热映"
+            android:textColor="@color/white_100"/>
+
+        <Button android:id="@+id/coming_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/switch_tabs_selector"
+            android:text="待映"
+            android:textColor="@color/white_100"/>
+
+        <Button android:id="@+id/search_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/switch_tabs_selector"
+            android:text="找片"
+            android:textColor="@color/white_100"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

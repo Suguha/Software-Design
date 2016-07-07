@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:gravity="center">
+
+    <LinearLayout android:id="@+id/login_layout"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout android:id="@+id/login_account"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView android:id="@+id/ic_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vec_account_circle_black_24dp" />
+
+            <EditText android:id="@+id/edit_text_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:hint="Name"
+                android:textSize="@dimen/edit_text_size"
+                android:textColor="@color/black_87"
+                android:textColorHint="@color/black_26"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView android:id="@+id/ic_keyboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vec_lock_black_24dp"/>
+
+            <EditText android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:hint="Password"
+                android:textSize="@dimen/edit_text_size"
+                android:textColor="@color/black_87"
+                android:textColorHint="@color/black_26"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button android:id="@+id/btn_signin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="登录"
+                android:textSize="@dimen/edit_text_size"
+                android:textColor="@drawable/btn_click_selector"
+                android:background="@color/white_100"/>
+
+            <Button android:id="@+id/btn_signup"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white_100"
+                android:text="注册"
+                android:textColor="@drawable/btn_click_selector"
+                android:textSize="@dimen/edit_text_size"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
