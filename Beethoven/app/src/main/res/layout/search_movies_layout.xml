@@ -11,7 +11,8 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <LinearLayout android:id="@+id/filter_types"
                 android:layout_width="match_parent"
@@ -26,7 +27,8 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <LinearLayout android:id="@+id/filter_locations"
                 android:layout_width="match_parent"
@@ -41,7 +43,8 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <LinearLayout android:id="@+id/filter_years"
                 android:layout_width="match_parent"
@@ -56,7 +59,8 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <LinearLayout android:id="@+id/filter_bnh"
                 android:layout_width="match_parent"
