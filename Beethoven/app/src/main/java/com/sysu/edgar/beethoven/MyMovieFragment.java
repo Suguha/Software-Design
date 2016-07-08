@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by B402 on 2016/7/8.
+ * Created by Edgar on 2016/7/8.
  */
 public class MyMovieFragment extends android.support.v4.app.Fragment {
 

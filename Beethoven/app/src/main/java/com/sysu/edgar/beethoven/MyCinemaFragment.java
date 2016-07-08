@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by B402 on 2016/7/8.
+ * Created by Edgar on 2016/7/8.
  */
 public class MyCinemaFragment extends Fragment {
     @Nullable
