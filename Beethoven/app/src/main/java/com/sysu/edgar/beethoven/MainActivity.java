@@ -1,8 +1,7 @@
 package com.sysu.edgar.beethoven;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -10,69 +9,63 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.sysu.edgar.beethoven.MovieFragments.Coming_movies_fragment;
-import com.sysu.edgar.beethoven.MovieFragments.FragmentSwitcher;
-import com.sysu.edgar.beethoven.MovieFragments.Hot_movies_fragment;
-import com.sysu.edgar.beethoven.MovieFragments.MyPageAdapter;
-import com.sysu.edgar.beethoven.MovieFragments.Search_movies_fragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private View loginView, regView;
-    private RelativeLayout _search_layout = null;
-    private ImageView _separate_line = null;
-    RelativeLayout.LayoutParams _lp = null;
+    private LinearLayout _search_layout = null;
     private boolean first_click = true;
     private boolean has_login = false;
-    private Hot_movies_fragment hot_movies_fragment;
-    private Coming_movies_fragment coming_movies_fragment;
-    private Search_movies_fragment search_movies_fragment;
-    private MyPageAdapter myPageAdapter;
-    private Button _btn_hot = null;
-    private Button _btn_coming = null;
-    private Button _btn_searchMovie = null;
-    private ViewPager _viewPager = null;
     private ImageButton _bottom_btn_movies = null;
     private ImageButton _bottom_btn_cinemas = null;
     private ImageButton _bottom_btn_account = null;
     private EditText search_text = null;
     private ImageButton btn_search = null;
-    private List<Fragment> fragments;
-    private BottomMenuSwitch bottomMenuSwitch = null;
-    private SearchAdaptive searchAdaptive = null;
-    private FragmentSwitcher fragmentSwitcher = null;
+    private BottomMenuSwitch bottomMenuSwitch;
+    private SearchAdaptive searchAdaptive;
     private WindowManager wm;
     private int width;
     private int height;
     private int h;
     private int w;
+    private FragmentManager fragmentManager;
+    private MyCinemaFragment myCinemaFragment;
+    private MyAccountFragment myAccountFragment;
+    private MyMovieFragment myMovieFragment = null;
+    private android.support.v4.app.FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
+        setDefaultFragment();
+        myMovieFragment.setRetainInstance(true);
 
         _bottom_btn_movies.setImageDrawable(getResources().getDrawable(R.drawable.ic_movie_white_24dp));
         _bottom_btn_movies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //to change activity here
+                if (!first_click) {
+                    searchAdaptive.hide(_search_layout);
+                    first_click = true;
+                }
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                if (myMovieFragment == null) {
+                    myMovieFragment = new MyMovieFragment();
+                    System.out.println("Hello new MyMovieFragment()");
+                }
                 bottomMenuSwitch.movieSelected(MainActivity.this, _bottom_btn_movies, _bottom_btn_cinemas, _bottom_btn_account);
+                fragmentTransaction.replace(R.id.bottom_fragment_content, myMovieFragment);
+                fragmentTransaction.commit();
             }
         });
 
@@ -80,7 +73,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //to change activity here
+                if (!first_click) {
+                    searchAdaptive.hide(_search_layout);
+                    first_click = true;
+                }
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                if (myCinemaFragment == null) {
+                    myCinemaFragment = new MyCinemaFragment();
+                }
                 bottomMenuSwitch.cinemaSelected(MainActivity.this, _bottom_btn_movies, _bottom_btn_cinemas, _bottom_btn_account);
+                fragmentTransaction.replace(R.id.bottom_fragment_content, myCinemaFragment);
+                fragmentTransaction.commit();
             }
         });
 
@@ -88,14 +92,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //to change activity here
+                if (!first_click) {
+                    searchAdaptive.hide(_search_layout);
+                    first_click = true;
+                }
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                if (myAccountFragment == null) {
+                    myAccountFragment = new MyAccountFragment();
+                }
                 bottomMenuSwitch.accountSelected(MainActivity.this, _bottom_btn_movies, _bottom_btn_cinemas, _bottom_btn_account);
+                fragmentTransaction.replace(R.id.bottom_fragment_content, myAccountFragment);
+                fragmentTransaction.commit();
             }
         });
+
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchAdaptive.hide(_search_layout, _separate_line, _lp);
+                searchAdaptive.hide(_search_layout);
                 first_click = true;
             }
         });
@@ -111,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.getCurrentFocus().getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS
                     );
-                    searchAdaptive.hide(_search_layout, _separate_line, _lp);
+                    searchAdaptive.hide(_search_layout);
                     first_click = true;
 
                     //todo search thing here
@@ -121,51 +137,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final FragmentSwitcher fragmentSwitcher = new FragmentSwitcher();
-        _viewPager.setAdapter(myPageAdapter);
-        _viewPager.setCurrentItem(0);
-        _btn_hot.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
+    }
 
-        _viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    private void setDefaultFragment() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                fragmentSwitcher.processPageSelected(MainActivity.this, _btn_hot, _btn_searchMovie, _btn_coming, position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        _btn_hot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentSwitcher.processPageSelected(MainActivity.this, _btn_hot, _btn_searchMovie, _btn_coming, 0);
-                _viewPager.setCurrentItem(0);
-            }
-        });
-
-        _btn_coming.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentSwitcher.processPageSelected(MainActivity.this, _btn_hot, _btn_searchMovie, _btn_coming, 1);
-                _viewPager.setCurrentItem(1);
-            }
-        });
-
-        _btn_searchMovie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentSwitcher.processPageSelected(MainActivity.this, _btn_hot, _btn_searchMovie, _btn_coming, 2);
-                _viewPager.setCurrentItem(2);
-            }
-        });
+        if (myMovieFragment == null) {
+            myMovieFragment = new MyMovieFragment();
+            System.out.println("Hello MyMovieFragment()");
+        }
+        fragmentTransaction.replace(R.id.bottom_fragment_content, myMovieFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -181,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_search:
                 Toast.makeText(MainActivity.this, "Hello Search", Toast.LENGTH_SHORT).show();
                 if (first_click) {
-                    searchAdaptive.show(_search_layout, _separate_line, _lp);
+                    searchAdaptive.show(_search_layout);
                     first_click = false;
                 } else {
-                    searchAdaptive.hide(_search_layout, _separate_line, _lp);
+                    searchAdaptive.hide(_search_layout);
                     first_click = true;
                 }
                 break;
@@ -209,28 +192,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
-
-
-
-
     //这里往下是初始化信息，可不看
-    private List<Fragment> getFragments() {
-        hot_movies_fragment = new Hot_movies_fragment();
-        coming_movies_fragment = new Coming_movies_fragment();
-        search_movies_fragment = new Search_movies_fragment();
-
-        List<Fragment> fragments = new ArrayList<Fragment>();
-        fragments.add(hot_movies_fragment);
-        fragments.add(coming_movies_fragment);
-        fragments.add(search_movies_fragment);
-        return fragments;
-    }
-
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         layoutParams.alpha = bgAlpha;
@@ -245,13 +207,8 @@ public class MainActivity extends AppCompatActivity {
         h = height * 7 / 24;
 
         search_text = (EditText)this.findViewById(R.id.search_text);
-        _search_layout = (RelativeLayout)this.findViewById(R.id.search_layout);
-        _separate_line = (ImageView) this.findViewById(R.id.separate_line);
-        _lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        _search_layout = (LinearLayout)this.findViewById(R.id.search_layout);
         btn_search = (ImageButton)this.findViewById(R.id.btn_search);
-        _btn_hot = (Button)this.findViewById(R.id.hot_movies);
-        _btn_coming = (Button)this.findViewById(R.id.coming_movies);
-        _btn_searchMovie = (Button)this.findViewById(R.id.search_movies);
         _bottom_btn_account = (ImageButton)this.findViewById(R.id.bottom_btn_account);
         _bottom_btn_cinemas = (ImageButton)this.findViewById(R.id.bottom_btn_cinemas);
         _bottom_btn_movies = (ImageButton)this.findViewById(R.id.bottom_btn_movies);
@@ -259,12 +216,8 @@ public class MainActivity extends AppCompatActivity {
         loginView = LayoutInflater.from(this).inflate(R.layout.login_layout, null);
         regView = LayoutInflater.from(this).inflate(R.layout.register_layout, null);
 
-        fragments = getFragments();
-        myPageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
-        _viewPager = (ViewPager)this.findViewById(R.id.view_pager);
-
         bottomMenuSwitch = new BottomMenuSwitch();
         searchAdaptive = new SearchAdaptive();
-        fragmentSwitcher = new FragmentSwitcher();
+
     }
 }

@@ -8,19 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.sysu.edgar.beethoven.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Edgar on 2016/7/6.
@@ -28,19 +24,18 @@ import java.util.List;
 public class Coming_movies_fragment extends Fragment {
 
     private ArrayList<HashMap<String, Object>> dataArrayList = new ArrayList<HashMap<String, Object>>();
-    private LinearLayout linearLayout = null;
+//    private LinearLayout linearLayout = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.coming_movies_layout, container, false);
-        ListView scrollListView = (ListView)view.findViewById(R.id.coming_movies_listview);
 
-        linearLayout = (LinearLayout)view.findViewById(R.id.test_layout);
-
+        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.test_layout);
         //完成下面的getScrollData函数，获取数据，包括电影名称，电影海报图片，评分；
         getScrollData(getContext(), inflater, linearLayout);
 
+        ListView scrollListView = (ListView)view.findViewById(R.id.coming_movies_listview);
         //完成下面的getData函数，获取数据，包括电影名称，电影海报图片，评分；
         getData();
 
@@ -83,7 +78,6 @@ public class Coming_movies_fragment extends Fragment {
     }
 
     private void getScrollData(Context context, LayoutInflater inflater, LinearLayout ll) {
-
         //30是测试用的数据，具体情况要根据后台数据改
         for (int i = 0; i < 30; i++) {
             View hh = new View(context);

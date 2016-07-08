@@ -45,6 +45,7 @@ public class Hot_movies_fragment extends Fragment {
             }
         });
 
+        System.out.println("Hot Moviews Fragment Create View!");
         return view;
     }
 
@@ -54,7 +55,7 @@ public class Hot_movies_fragment extends Fragment {
     }
 
     //需要后台数据
-    private void getData() {
+    public void getData() {
         dataArrayList.clear();
 
         //30是测试用的数据，具体情况要根据后台数据改

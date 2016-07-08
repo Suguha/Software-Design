@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class FragmentSwitcher {
 
-    public  void processPageSelected(final MainActivity activity, Button _btn_hot,
+    public  void processPageSelected(final Fragment activity, Button _btn_hot,
                                      Button _btn_searchMovie, Button _btn_coming, int position) {
         if (position == 0) {
             _btn_hot.setBackground(activity.getResources().getDrawable(R.color.colorPrimaryDark));
