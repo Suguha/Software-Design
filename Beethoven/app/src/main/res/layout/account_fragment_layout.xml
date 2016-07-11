@@ -42,7 +42,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp">
 
-        <LinearLayout android:id="@+id/account_xiang_kan"
+        <LinearLayout android:id="@+id/account_btn_wanted"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

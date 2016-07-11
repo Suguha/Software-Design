@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_100"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:padding="8dp">
+
+        <ImageButton android:id="@+id/about_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电影详情"
+            android:layout_weight="1"
+            android:textColor="@color/white_100"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_100"
+            android:orientation="vertical">
+
+            <include layout="@layout/activity_movie_detail_item"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="16dp"
+                android:background="@color/white_100"
+                android:layout_marginRight="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:background="@drawable/switch_tabs_selector">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_favorite_black_24dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="想看"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="@color/white_100"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white_100"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:background="@drawable/switch_tabs_selector">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_grade_black_24dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="评分"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="@color/white_100"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black_12"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="剧情简介"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:textColor="@color/black_87"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black_12"/>
+
+            <TextView android:id="@+id/synopsis_text"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:textColor="@color/black_87"
+                android:text="1861年美国南北战争爆发的前夕，塔拉庄园的千金小姐斯嘉丽（费雯·丽饰）爱上了另一庄园主的儿子艾希礼（莱斯利·霍华德饰），但艾希礼却选择了温柔善良的梅兰妮（奥莉薇·黛·哈佛兰饰）。斯嘉丽赌气嫁给梅兰妮的弟弟查尔斯。南北战争爆发后，查尔斯上前线并战死。斯嘉丽成了寡妇，但她内心却一直热恋着艾希礼。斯嘉丽和风度翩翩的商人白瑞德（克拉克·盖博饰）相识，但拒绝了他的追求。目睹战乱带来的惨状，任性的斯嘉丽成熟了不少。不少人家惊惶地开始逃离家园，但正巧梅兰妮要生孩子，斯嘉丽只好留下来照顾她。战后斯嘉丽在绝望中去找白瑞德借钱，偶遇本来要迎娶她妹妹的暴发户弗兰克。为了保住家园，她勾引弗兰克跟她结婚。
+弗兰克和艾希礼加入了反政府的秘密组织，在一次集会时遭北方军包围，弗兰克中弹死亡，艾希礼负伤逃亡，在白瑞德帮助下回到梅兰妮身边。斯嘉丽再次成为寡妇，此时，白瑞德前来向她求婚，她终于与一直爱她的搞私运军火和粮食致富的白瑞德结了婚。一年后，女儿邦妮出生，白瑞德把全部感情投注到邦妮身上，他跟斯嘉丽的感情却因她忘不了艾希礼而破裂。斯嘉丽再次怀孕，但在和白瑞德的争吵中滚下楼梯流产。白瑞德感到内疚，决心同斯嘉丽言归于好，不料就在这时，小女儿邦妮意外坠马摔死了。与此同时梅兰妮终因操劳过度卧病不起。临终前，她把自已的丈夫艾希礼和儿子托付给斯嘉丽，斯嘉丽不顾一切扑向艾希礼的怀中，紧紧拥抱住他，站在一旁的白瑞德无法再忍受下去，转身离去。面对伤心欲绝毫无反应的艾希礼，斯嘉丽终于明白，她爱的艾希礼其实是不存在的，她真正需要的是白瑞德。
+当斯嘉丽赶回家里告诉白瑞德，她是真正爱他的时候，白瑞德已不再相信她。他决心离开斯嘉丽，返回老家去寻找美好的事物，被遗弃的斯嘉丽站在浓雾迷漫的院中，想起了父亲曾经对她说过的一句话：“世界上唯有土地与明天同在。”她决定守在她的土地上重新创造新的生活，她期盼着美好的明天的到来。"
+                />
+
+            <ImageView android:id="@+id/loading_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:background="@color/white_100"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black_12"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="立即购票"
+        android:textSize="16sp"
+        android:textColor="@color/white_100"
+        android:background="@drawable/switch_tabs_selector"/>
+</LinearLayout>

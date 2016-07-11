@@ -6,20 +6,20 @@
     android:background="#FFFFFF"
     android:gravity="center">
 
-    <LinearLayout android:id="@+id/login_layout"
+    <LinearLayout
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
 
-        <LinearLayout android:id="@+id/login_account"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center">
 
-            <ImageView android:id="@+id/ic_account"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/vec_account_circle_black_24dp" />
@@ -35,14 +35,14 @@
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/login_password"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center">
 
-            <ImageView android:id="@+id/ic_keyboard"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/vec_lock_black_24dp"/>

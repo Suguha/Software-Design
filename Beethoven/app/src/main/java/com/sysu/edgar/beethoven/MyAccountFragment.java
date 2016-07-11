@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sysu.edgar.beethoven.MyAccountFragmentContents.AboutActivity;
+import com.sysu.edgar.beethoven.MyAccountFragmentContents.HistoryOrderActivity;
 import com.sysu.edgar.beethoven.MyAccountFragmentContents.ProfileActivity;
+import com.sysu.edgar.beethoven.MyAccountFragmentContents.WantedActivity;
 
 /**
  * Created by Edgar on 2016/7/8.
@@ -90,8 +92,26 @@ public class MyAccountFragment extends Fragment {
             public void onClick(View v) {
                 if (logined) {
                     System.out.println();
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), HistoryOrderActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        LinearLayout btn_wanted = (LinearLayout)account_fragment_view.findViewById(R.id.account_btn_wanted);
+        btn_wanted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!logined) {
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), WantedActivity.class);
+                    startActivity(intent);
                 }
             }
         });

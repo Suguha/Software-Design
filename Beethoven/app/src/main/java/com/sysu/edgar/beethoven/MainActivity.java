@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
         //todo something when item selected
         switch (item.getItemId()) {
             case R.id.menu_search:
-                Toast.makeText(MainActivity.this, "Hello Search", Toast.LENGTH_SHORT).show();
                 if (first_click) {
                     searchAdaptive.show(_search_layout);
                     first_click = false;

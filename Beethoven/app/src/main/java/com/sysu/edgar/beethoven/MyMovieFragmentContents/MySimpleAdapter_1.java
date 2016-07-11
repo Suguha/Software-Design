@@ -36,6 +36,7 @@ public class MySimpleAdapter_1 extends SimpleAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View view = super.getView(position, convertView, parent);
         Button btn = (Button) view.findViewById(R.id.btn_want_watch);
         btn.setTag(position);

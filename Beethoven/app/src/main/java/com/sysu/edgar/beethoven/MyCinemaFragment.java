@@ -149,8 +149,6 @@ public class MyCinemaFragment extends Fragment {
                 provinceName = addresses.get(0).getAdminArea();
                 countryName = addresses.get(0).getCountryName();
                 subLocalityName = addresses.get(0).getSubLocality();
-                Log.i("location", addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality() +
-                        ", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName());
             }
         }
     }

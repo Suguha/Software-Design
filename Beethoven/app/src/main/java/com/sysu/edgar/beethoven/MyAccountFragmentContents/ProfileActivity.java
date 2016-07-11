@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.sysu.edgar.beethoven.R;
 
 /**
- * Created by Administrator on 2016/7/10.
+ * Created by Edgar on 2016/7/10.
  */
 public class ProfileActivity extends AppCompatActivity {
 

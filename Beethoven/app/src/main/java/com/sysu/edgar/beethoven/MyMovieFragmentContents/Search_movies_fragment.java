@@ -1,6 +1,7 @@
 package com.sysu.edgar.beethoven.MyMovieFragmentContents;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.sysu.edgar.beethoven.MovieDetailActivity;
 import com.sysu.edgar.beethoven.R;
 
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class Search_movies_fragment extends Fragment {
 
         listView = (ListView)search_view.findViewById(R.id.search_movies_listview);
         getData();
-        simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.movies_item_form,
+        simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.hot_movies_item_form,
                 new String[] {"ItemImage", "ItemTitle", "ItemText", "ItemNum"}, new int[] {R.id.movie_image, R.id.movie_title,
                 R.id.movie_score_text, R.id.movie_score_number});
 
@@ -71,6 +73,9 @@ public class Search_movies_fragment extends Fragment {
                 //to goto movie detail activity;
                 String test = "hello " + position;
                 System.out.println(test);
+                Intent intent = new Intent();
+                intent.setClass(getContext(), MovieDetailActivity.class);
+                startActivity(intent);
             }
         });
         return search_view;

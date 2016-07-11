@@ -24,5 +24,8 @@
 
         <activity android:name=".MyAccountFragmentContents.AboutActivity"></activity>
         <activity android:name=".MyAccountFragmentContents.ProfileActivity"></activity>
+        <activity android:name=".MyAccountFragmentContents.HistoryOrderActivity"></activity>
+        <activity android:name=".MyAccountFragmentContents.WantedActivity"></activity>
+        <activity android:name=".MovieDetailActivity"></activity>
     </application>
 </manifest>

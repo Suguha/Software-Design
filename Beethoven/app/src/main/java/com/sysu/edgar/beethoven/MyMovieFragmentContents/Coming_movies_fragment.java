@@ -1,6 +1,7 @@
 package com.sysu.edgar.beethoven.MyMovieFragmentContents;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sysu.edgar.beethoven.MovieDetailActivity;
 import com.sysu.edgar.beethoven.R;
 
 import java.util.ArrayList;
@@ -29,7 +31,6 @@ public class Coming_movies_fragment extends Fragment {
     private ListView listView = null;
     private MySimpleAdapter_1 simpleAdapter = null;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,13 +38,13 @@ public class Coming_movies_fragment extends Fragment {
 
         linearLayout = (LinearLayout)coming_view.findViewById(R.id.coming_horizontal_scrolllist);
         //完成下面的getScrollData函数，获取数据，包括电影名称，电影海报图片，评分；
-        getScrollData(getContext(), inflater, linearLayout);
+        setScrollData(getContext(), inflater, linearLayout);
 
         listView = (ListView)coming_view.findViewById(R.id.coming_movies_listview);
         //完成下面的getData函数，获取数据，包括电影名称，电影海报图片，评分；
-        getData();
+        setData();
 
-        simpleAdapter = new MySimpleAdapter_1(getActivity(), dataArrayList, R.layout.coming_movies_item_form,
+        simpleAdapter = new MySimpleAdapter_1(getContext(), dataArrayList, R.layout.coming_movies_item_form,
                 new String[] {"ItemImage", "ItemTitle", "ItemNum", "ItemText", "ItemDate"}, new int[] {R.id.movie_image,
                 R.id.movie_title, R.id.movie_wtw_number, R.id.movie_wtw_text, R.id.coming_movies_time_stamp});
 
@@ -55,6 +56,9 @@ public class Coming_movies_fragment extends Fragment {
                 //to goto movie detail activity;
                 String test = "hello " + position;
                 System.out.println(test);
+                Intent intent = new Intent();
+                intent.setClass(getContext(), MovieDetailActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -67,7 +71,7 @@ public class Coming_movies_fragment extends Fragment {
     }
 
     //需要后台数据
-    private void getData() {
+    private void setData() {
         dataArrayList.clear();
         //30是测试用的数据，具体情况要根据后台数据改
         for (int i = 0; i < 30; i++) {
@@ -81,7 +85,7 @@ public class Coming_movies_fragment extends Fragment {
         }
     }
 
-    private void getScrollData(Context context, LayoutInflater inflater, LinearLayout ll) {
+    private void setScrollData(Context context, LayoutInflater inflater, LinearLayout ll) {
         //30是测试用的数据，具体情况要根据后台数据改
         for (int i = 0; i < 30; i++) {
             View hh = new View(context);
@@ -101,6 +105,9 @@ public class Coming_movies_fragment extends Fragment {
                 public void onClick(View v) {
                     //goto the movie detail activity here
                     System.out.println("Hello ");
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), MovieDetailActivity.class);
+                    startActivity(intent);
                 }
             });
             ll.addView(hh, i);

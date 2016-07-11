@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="历史订单"
+            android:text="想看的电影"
             android:layout_weight="1"
             android:textColor="@color/white_100"
             android:textSize="20sp"
@@ -30,8 +30,8 @@
 
     </LinearLayout>
 
-    <ListView android:id="@+id/history_order_listview"
+    <ListView android:id="@+id/wanted_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>
