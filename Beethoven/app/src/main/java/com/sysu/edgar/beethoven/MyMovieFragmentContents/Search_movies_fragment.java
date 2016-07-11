@@ -1,4 +1,4 @@
-package com.sysu.edgar.beethoven.MovieFragments;
+package com.sysu.edgar.beethoven.MyMovieFragmentContents;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.sysu.edgar.beethoven.R;
 
@@ -34,27 +32,34 @@ public class Search_movies_fragment extends Fragment {
     private Button[] last_clicks = new Button[] {null, null, null, null};
 
     private ArrayList<HashMap<String, Object>> dataArrayList = new ArrayList<HashMap<String, Object>>();
+    private LinearLayout linearLayout_1;
+    private LinearLayout linearLayout_2;
+    private LinearLayout linearLayout_3;
+    private LinearLayout linearLayout_4;
+    private ListView listView;
+    private MySimpleAdapter simpleAdapter = null;
+    private View search_view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_movies_layout, container, false);
+        search_view = inflater.inflate(R.layout.search_movies_childfragment, container, false);
 
-        LinearLayout linearLayout_1 = (LinearLayout)view.findViewById(R.id.filter_types);
+        linearLayout_1 = (LinearLayout)search_view.findViewById(R.id.filter_types);
         setButtonText(getContext(), linearLayout_1, btns_types, 0);
 
-        LinearLayout linearLayout_2 = (LinearLayout)view.findViewById(R.id.filter_locations);
+        linearLayout_2 = (LinearLayout)search_view.findViewById(R.id.filter_locations);
         setButtonText(getContext(), linearLayout_2, btns_locations, 1);
 
-        LinearLayout linearLayout_3 = (LinearLayout)view.findViewById(R.id.filter_years);
+        linearLayout_3 = (LinearLayout)search_view.findViewById(R.id.filter_years);
         setButtonText(getContext(), linearLayout_3, btns_years, 2);
 
-        LinearLayout linearLayout_4 = (LinearLayout)view.findViewById(R.id.filter_bnh);
+        linearLayout_4 = (LinearLayout)search_view.findViewById(R.id.filter_bnh);
         setButtonText(getContext(), linearLayout_4, btns_bnh, 3);
 
-        ListView listView = (ListView)view.findViewById(R.id.search_movies_listview);
+        listView = (ListView)search_view.findViewById(R.id.search_movies_listview);
         getData();
-        MySimpleAdapter simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.hot_movies_listview_layout,
+        simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.movies_item_form,
                 new String[] {"ItemImage", "ItemTitle", "ItemText", "ItemNum"}, new int[] {R.id.movie_image, R.id.movie_title,
                 R.id.movie_score_text, R.id.movie_score_number});
 
@@ -68,7 +73,7 @@ public class Search_movies_fragment extends Fragment {
                 System.out.println(test);
             }
         });
-        return view;
+        return search_view;
     }
 
     @Override

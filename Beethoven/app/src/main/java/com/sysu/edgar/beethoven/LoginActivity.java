@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private MainActivity _test;
 
     public void proc_login(final View loginView, final View regView, final MainActivity activity, final int w, final int h) {
-        _test = activity;
+//        _test = activity;
         text_name_1 = (EditText)loginView.findViewById(R.id.edit_text_account);
         text_pwd_1 = (EditText)loginView.findViewById(R.id.edit_text_password);
         text_name_1.setText("");
@@ -35,11 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         login_pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                _test.backgroundAlpha(1.0f);
+                activity.backgroundAlpha(1.0f);
                 login_pop.dismiss();
             }
         });
         if (login_pop != null || !login_pop.isShowing()) {
+            activity.backgroundAlpha(0.3f);
             login_pop.showAtLocation(loginView.getRootView(), Gravity.CENTER, 0, 0);
         }
         process(loginView, regView, login_pop, w, h);

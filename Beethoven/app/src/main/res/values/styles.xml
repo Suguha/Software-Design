@@ -12,4 +12,8 @@
         <item name="android:windowEnterAnimation">@anim/popwin_scale_show</item>
         <item name="android:windowExitAnimation">@anim/popwin_translate_hide</item>
     </style>
+
+    <style name="MyThemeStyle" parent="Theme.Design.Light.NoActionBar">
+    </style>
+
 </resources>

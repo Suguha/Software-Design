@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:scrollbars="none">
 
-        <LinearLayout android:id="@+id/test_layout"
+        <LinearLayout android:id="@+id/coming_horizontal_scrolllist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

@@ -1,13 +1,20 @@
 package com.sysu.edgar.beethoven;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.location.Geocoder;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,18 +44,23 @@ public class MainActivity extends AppCompatActivity {
     private int h;
     private int w;
     private FragmentManager fragmentManager;
-    private MyCinemaFragment myCinemaFragment;
-    private MyAccountFragment myAccountFragment;
-    private MyMovieFragment myMovieFragment = null;
+    private MyCinemaFragment myCinemaFragment = new MyCinemaFragment();
+    private MyAccountFragment myAccountFragment = new MyAccountFragment();
+    private MyMovieFragment myMovieFragment = new MyMovieFragment();
     private android.support.v4.app.FragmentTransaction fragmentTransaction;
+//    private Toolbar mToolbar = null;
+//    private Toolbar eToolbar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         init();
+        setTitle("电影");
         setDefaultFragment();
-        myMovieFragment.setRetainInstance(true);
+
+        Geocoder geo = new Geocoder(this, Locale.CHINA);
 
         _bottom_btn_movies.setImageDrawable(getResources().getDrawable(R.drawable.ic_movie_white_24dp));
         _bottom_btn_movies.setOnClickListener(new View.OnClickListener() {
@@ -57,12 +71,8 @@ public class MainActivity extends AppCompatActivity {
                     searchAdaptive.hide(_search_layout);
                     first_click = true;
                 }
-                fragmentManager = getSupportFragmentManager();
+                setTitle("电影");
                 fragmentTransaction = fragmentManager.beginTransaction();
-                if (myMovieFragment == null) {
-                    myMovieFragment = new MyMovieFragment();
-                    System.out.println("Hello new MyMovieFragment()");
-                }
                 bottomMenuSwitch.movieSelected(MainActivity.this, _bottom_btn_movies, _bottom_btn_cinemas, _bottom_btn_account);
                 fragmentTransaction.replace(R.id.bottom_fragment_content, myMovieFragment);
                 fragmentTransaction.commit();
@@ -77,11 +87,9 @@ public class MainActivity extends AppCompatActivity {
                     searchAdaptive.hide(_search_layout);
                     first_click = true;
                 }
-                fragmentManager = getSupportFragmentManager();
+                setTitle("电影院");
                 fragmentTransaction = fragmentManager.beginTransaction();
-                if (myCinemaFragment == null) {
-                    myCinemaFragment = new MyCinemaFragment();
-                }
+                System.out.println("!!!!!!!!Here");
                 bottomMenuSwitch.cinemaSelected(MainActivity.this, _bottom_btn_movies, _bottom_btn_cinemas, _bottom_btn_account);
                 fragmentTransaction.replace(R.id.bottom_fragment_content, myCinemaFragment);
                 fragmentTransaction.commit();
@@ -96,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
                     searchAdaptive.hide(_search_layout);
                     first_click = true;
                 }
-                fragmentManager = getSupportFragmentManager();
+                setTitle("我的信息");
+                Bundle args = new Bundle();
+                args.putBoolean("hasLogined", has_login);
+                myAccountFragment.setArguments(args);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                if (myAccountFragment == null) {
-                    myAccountFragment = new MyAccountFragment();
-                }
                 bottomMenuSwitch.accountSelected(MainActivity.this, _bottom_btn_movies, _bottom_btn_cinemas, _bottom_btn_account);
                 fragmentTransaction.replace(R.id.bottom_fragment_content, myAccountFragment);
                 fragmentTransaction.commit();
@@ -140,13 +148,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDefaultFragment() {
-        fragmentManager = getSupportFragmentManager();
+//        fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (myMovieFragment == null) {
-            myMovieFragment = new MyMovieFragment();
-            System.out.println("Hello MyMovieFragment()");
-        }
         fragmentTransaction.replace(R.id.bottom_fragment_content, myMovieFragment);
         fragmentTransaction.commit();
     }
@@ -176,13 +179,17 @@ public class MainActivity extends AppCompatActivity {
                 if (has_login) {
                     //todo log out
                     backgroundAlpha(1.0f);
-
+                    System.out.println("This is log out!");
+                    myAccountFragment.setAccountData(false);
+                    has_login = false;
+                    Toast.makeText(MainActivity.this, "成功登出", Toast.LENGTH_SHORT).show();
                 } else {
                     //todo log in
+                    System.out.println("This is log in");
                     final LoginActivity loginActivity = new LoginActivity();
-                    backgroundAlpha(0.3f);
                     loginActivity.proc_login(loginView, regView, MainActivity.this, w, h);
-//                    has_login = true;
+                    myAccountFragment.setAccountData(true);
+                    has_login = true;
                 }
                 break;
 
@@ -213,11 +220,14 @@ public class MainActivity extends AppCompatActivity {
         _bottom_btn_cinemas = (ImageButton)this.findViewById(R.id.bottom_btn_cinemas);
         _bottom_btn_movies = (ImageButton)this.findViewById(R.id.bottom_btn_movies);
 
-        loginView = LayoutInflater.from(this).inflate(R.layout.login_layout, null);
-        regView = LayoutInflater.from(this).inflate(R.layout.register_layout, null);
+        loginView = LayoutInflater.from(this).inflate(R.layout.login_dialog, null);
+        regView = LayoutInflater.from(this).inflate(R.layout.register_dialog, null);
 
         bottomMenuSwitch = new BottomMenuSwitch();
         searchAdaptive = new SearchAdaptive();
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
     }
 }

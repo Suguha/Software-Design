@@ -1,4 +1,4 @@
-package com.sysu.edgar.beethoven.MovieFragments;
+package com.sysu.edgar.beethoven.MyMovieFragmentContents;
 
 import android.content.Context;
 import android.view.View;
@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Edgar on 2016/7/7.
  */
-public class MySimpleAdapter extends SimpleAdapter {
+public class MySimpleAdapter_1 extends SimpleAdapter {
 
     /**
      * Constructor
@@ -30,14 +30,14 @@ public class MySimpleAdapter extends SimpleAdapter {
      * @param to       The views that should display column in the "from" parameter. These should all be
      *                 TextViews. The first N views in this list are given the values of the first N columns
      */
-    public MySimpleAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+    public MySimpleAdapter_1(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
-        Button btn = (Button) view.findViewById(R.id.btn_buy_tickets);
+        Button btn = (Button) view.findViewById(R.id.btn_want_watch);
         btn.setTag(position);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

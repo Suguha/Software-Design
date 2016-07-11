@@ -1,4 +1,4 @@
-package com.sysu.edgar.beethoven.MovieFragments;
+package com.sysu.edgar.beethoven.MyMovieFragmentContents;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,13 +24,13 @@ public class Hot_movies_fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.hot_movies_layout, container, false);
+        View view =  inflater.inflate(R.layout.hot_movies_childfragment, container, false);
         ListView listView = (ListView)view.findViewById(R.id.hot_movies_listview);
 
         //完成下面的getData函数，获取数据，包括电影名称，电影海报图片，评分；
         getData();
 
-        MySimpleAdapter simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.hot_movies_listview_layout,
+        MySimpleAdapter simpleAdapter = new MySimpleAdapter(getActivity(), dataArrayList, R.layout.movies_item_form,
                 new String[] {"ItemImage", "ItemTitle", "ItemText", "ItemNum"}, new int[] {R.id.movie_image, R.id.movie_title,
                 R.id.movie_score_text, R.id.movie_score_number});
 
@@ -45,7 +45,6 @@ public class Hot_movies_fragment extends Fragment {
             }
         });
 
-        System.out.println("Hot Moviews Fragment Create View!");
         return view;
     }
 

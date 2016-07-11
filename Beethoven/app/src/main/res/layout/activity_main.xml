@@ -18,7 +18,7 @@
         <EditText android:id="@+id/search_text"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:hint="搜索你想要的影片"
+            android:hint="搜索你想要的影片或电影院"
             android:textColorHint="@color/black_26"
             android:imeOptions="actionSearch"
             android:singleLine="true"
