@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_100"
     android:orientation="vertical">
 
     <LinearLayout
@@ -141,13 +142,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="正在上映的电影"
+                android:text="近期电影"
                 android:textSize="12sp"
                 android:textColor="@color/black_87"
                 android:background="@color/black_26"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
                 android:paddingLeft="8dp"/>
+
+            <TextView android:id="@+id/loading_text"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:text="Loading films..."
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/black_54"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -162,6 +171,11 @@
                 </LinearLayout>
 
             </HorizontalScrollView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black_12"/>
 
 
 

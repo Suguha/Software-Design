@@ -39,6 +39,8 @@ import java.util.Locale;
  */
 public class CinemaFragment extends Fragment {
 
+    public MovieDatabase movieDatabase = null;
+
     private ListView listView = null;
     private String requestURL = "http://119.29.144.22:8001/api/cinema?qu=";
     private final String BASE_URL ="http://119.29.144.22:8001/api/cinema?qu=";
@@ -92,7 +94,7 @@ public class CinemaFragment extends Fragment {
         runnable_cinema = new Runnable() {
             @Override
             public void run() {
-                if (dataArrayList.size() != 0) {
+                if (dataArrayList.size() != 0 && movieDatabase != null) {
                     simpleAdapter = new SimpleAdapter(getActivity(), dataArrayList, R.layout.cinema_item_form,
                             new String[]{"ItemName", "ItemAddress", "ItemTel"},
                             new int[]{R.id.cinema_item_name, R.id.cinema_item_address, R.id.cinema_item_telephone});
@@ -111,15 +113,25 @@ public class CinemaFragment extends Fragment {
                             intent.putExtra("CinemaId", cinema_ids[position]);
                             intent.putExtra("CinemaTel", cinema_tels[position]);
                             intent.putExtra("Index", position);
+
+                            intent.putExtra("DatabaseTitles", movieDatabase.titles);
+                            intent.putExtra("DatabaseActors", movieDatabase.actors);
+                            intent.putExtra("DatabaseTimeLanguages", movieDatabase.time_languages);
+                            intent.putExtra("DatabaseScores", movieDatabase.scores);
+                            intent.putExtra("DatabaseTypes", movieDatabase.types);
+                            intent.putExtra("DatabaseOnTimes", movieDatabase.on_times);
+                            intent.putExtra("DatabaseDescriptions", movieDatabase.descriptions);
+                            intent.putExtra("DatabaseIds", movieDatabase.ids);
+                            intent.putExtra("DatabaseImgUrls", movieDatabase.imgUrls);
                             startActivity(intent);
                         }
                     });
+                } else {
+                    handler_cinema.postDelayed(this, 2 * 1000);
                 }
-//                handler_cinema.postDelayed(this, 60 * 1000);
             }
         };
         handler_cinema.postDelayed(runnable_cinema, 5 * 1000);
-
         return cinema_view;
     }
 
@@ -213,5 +225,9 @@ public class CinemaFragment extends Fragment {
     private void refreshCinemaFragment() {
         handler_cinema.removeCallbacks(runnable_cinema);
         handler_cinema.post(runnable_cinema);
+    }
+
+    public void setMovieDataBase(MovieDatabase other) {
+        movieDatabase = new MovieDatabase(other);
     }
 }

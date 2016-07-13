@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="120dp"
+    android:layout_height="160dp"
     android:orientation="vertical"
     android:padding="8dp"
+    android:clickable="true"
+    android:gravity="center"
     android:background="@drawable/item_click_selector">
 
     <ImageView android:id="@+id/scroll_item_image"
@@ -13,11 +15,12 @@
         android:src="@drawable/ic_photo_black_100dp"/>
 
     <TextView android:id="@+id/scroll_item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="Title"
-        android:textSize="16sp"
-        android:layout_gravity="center"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:singleLine="true"
         android:textColor="@color/black_87"/>
 
 </LinearLayout>

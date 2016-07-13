@@ -2,6 +2,7 @@ package com.sysu.edgar.bach;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,8 +17,7 @@ import java.util.Map;
  * Created by Edgar on 2016/7/7.
  */
 public class MySimpleAdapter extends SimpleAdapter {
-
-    private ArrayList<Bitmap> BMImages = new ArrayList<Bitmap>();
+    private Bitmap[] HHImages;
 
     /**
      * Constructor
@@ -41,11 +41,9 @@ public class MySimpleAdapter extends SimpleAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
         final ImageView imageView = (ImageView)view.findViewById(R.id.movie_image);
-
-        if (BMImages.size() != 0) {
-            imageView.setImageBitmap(BMImages.get(position));
-        }
-
+//        if (HHImages.length != 0) {
+//            imageView.setImageBitmap(HHImages[position]);
+//        }
         Button btn = (Button) view.findViewById(R.id.btn_buy_tickets);
         btn.setTag(position);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -57,10 +55,7 @@ public class MySimpleAdapter extends SimpleAdapter {
         });
         return view;
     }
-
-    public void setBMImages(ArrayList<Bitmap> bmImages) {
-        this.BMImages = bmImages;
+    public void setBMImages(Bitmap[] b) {
+        this.HHImages = b;
     }
-
-
 }

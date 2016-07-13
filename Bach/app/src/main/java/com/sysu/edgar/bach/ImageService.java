@@ -20,11 +20,11 @@ public class ImageService {
         return bitmap;
     }
 
-    private static byte[] getImage(String urlPath) throws IOException {
+    public static byte[] getImage(String urlPath) throws IOException {
         URL url = new URL(urlPath);
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod("GET");
-        connection.setReadTimeout(60 * 1000);
+        connection.setReadTimeout(50 * 1000);
         InputStream inputStream = connection.getInputStream();
         byte[] data = readInputStream(inputStream);
         return data;

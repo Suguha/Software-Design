@@ -5,10 +5,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -78,6 +81,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_search:
+                Toast.makeText(MainActivity.this, "Hello Search", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setFragments() {
         fragments.clear();
         fragments.add(moviesFragment);
@@ -93,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 cinema_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_cinema_black_24dp));
                 bottom_btn_movies.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
                 bottom_btn_cinemas.setBackground(getResources().getDrawable(R.drawable.switch_tabs_selector));
+                moviesFragment.refreshMovies();
                 break;
 
             case 1:
@@ -102,12 +127,11 @@ public class MainActivity extends AppCompatActivity {
                 cinema_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_cinema_white_24dp));
                 bottom_btn_movies.setBackground(getResources().getDrawable(R.drawable.switch_tabs_selector));
                 bottom_btn_cinemas.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
+                cinemaFragment.setMovieDataBase(moviesFragment.movieDatabase);
                 break;
 
             default:
                 break;
         }
     }
-
-
 }
