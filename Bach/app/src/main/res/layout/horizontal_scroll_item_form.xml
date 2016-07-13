@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/item_click_selector">
+
+    <ImageView android:id="@+id/scroll_item_image"
+        android:layout_width="100dp"
+        android:layout_height="130dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_photo_black_100dp"/>
+
+    <TextView android:id="@+id/scroll_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black_87"/>
+
+</LinearLayout>

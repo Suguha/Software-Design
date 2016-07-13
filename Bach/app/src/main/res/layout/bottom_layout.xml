@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout android:id="@+id/bottom_btn_movies"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="@drawable/switch_tabs_selector"
+        android:padding="8dp">
+
+        <ImageView android:id="@+id/bottom_ic_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_movie_black_24dp"/>
+
+        <TextView android:id="@+id/bottom_text_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电影"
+            android:textSize="16sp"
+            android:textColor="@color/black_87"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/black_54"/>
+
+    <LinearLayout android:id="@+id/bottom_btn_cinemas"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="@drawable/switch_tabs_selector"
+        android:padding="8dp">
+
+        <ImageView android:id="@+id/bottom_ic_cinemas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cinema_black_24dp"/>
+
+        <TextView android:id="@+id/bottom_text_cinemas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电影院"
+            android:textSize="16sp"
+            android:textColor="@color/black_87"/>
+
+    </LinearLayout>
+
+</LinearLayout>

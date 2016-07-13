@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="false"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <TextView android:id="@+id/cinema_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="电影院名字"
+        android:textColor="@color/black_87"
+        android:textSize="24sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址："
+            android:textSize="16sp"
+            android:textColor="@color/black_54"/>
+
+        <TextView android:id="@+id/cinema_item_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="详细地址在这里"
+            android:textSize="16sp"
+            android:textColor="@color/black_54"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系电话："
+            android:textSize="16sp"
+            android:textColor="@color/black_54"/>
+
+        <TextView android:id="@+id/cinema_item_telephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="12345678"
+            android:textColor="@color/black_54"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
