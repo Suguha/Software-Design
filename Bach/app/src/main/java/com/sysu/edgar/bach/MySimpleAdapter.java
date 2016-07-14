@@ -1,6 +1,7 @@
 package com.sysu.edgar.bach;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
@@ -18,6 +19,8 @@ import java.util.Map;
  */
 public class MySimpleAdapter extends SimpleAdapter {
     private Bitmap[] HHImages;
+    private Context mContex = null;
+    private MoviesFragment moviesFragment = null;
 
     /**
      * Constructor
@@ -35,10 +38,11 @@ public class MySimpleAdapter extends SimpleAdapter {
      */
     public MySimpleAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
+        mContex = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
         final ImageView imageView = (ImageView)view.findViewById(R.id.movie_image);
 //        if (HHImages.length != 0) {
@@ -49,13 +53,19 @@ public class MySimpleAdapter extends SimpleAdapter {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //to goto buy ticket activity;
+                //to goto choose cinema activity;
                 System.out.println("Hello Click");
+                if (moviesFragment != null) {
+                    moviesFragment.chooseCinema(position);
+                }
             }
         });
         return view;
     }
     public void setBMImages(Bitmap[] b) {
         this.HHImages = b;
+    }
+    public void setMoviesFragment(MoviesFragment f) {
+        this.moviesFragment = f;
     }
 }

@@ -45,7 +45,7 @@ public class JsonParse {
         URL url = new URL(urlPath);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setReadTimeout(5 * 1000);
+        conn.setReadTimeout(50 * 1000);
         InputStream inStream = conn.getInputStream();
         while ((len = inStream.read(data)) != -1) {
             outStream.write(data, 0, len);

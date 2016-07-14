@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +36,6 @@ public class CinemaDetailActivity extends AppCompatActivity {
     private String[] film_ids;
     private Handler handler_scroll = new Handler();
     private Runnable runnable_scroll = null;
-    private final String BASE_URL = "http://119.29.144.22:8001/api/movie";
 
     private String[] movie_titles;
     private String[] movie_scores;
@@ -46,9 +46,6 @@ public class CinemaDetailActivity extends AppCompatActivity {
     private String[] movie_descriptions;
     private String[] movie_ids;
     private String[] movie_image_urls;
-    private Bitmap[] movie_images;
-
-    private ArrayList<byte[]> movie_image_bytes;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,16 +111,14 @@ public class CinemaDetailActivity extends AppCompatActivity {
                         try {
                             image.setImageBitmap(scrollImages.get(i));
                         } catch (IndexOutOfBoundsException e) {
-                            handler_scroll.postDelayed(this, 3 * 1000);
+//                            handler_scroll.postDelayed(this, 10 * 1000);
                             e.printStackTrace();
                         }
                         view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 int j;
-                                System.out.println("!!!!!!!!!!!!!Temp: " + temp);
                                 for (j = 0; j < movie_ids.length; j++) {
-                                    System.out.println("!!!!!!!!!toyou: " + j + " " + temp  + " " + movie_ids[j]);
                                     if (movie_ids[j].equals(temp)) {
                                         Intent intent = new Intent();
                                         intent.setClass(CinemaDetailActivity.this, MovieDetailActivity.class);
@@ -140,7 +135,7 @@ public class CinemaDetailActivity extends AppCompatActivity {
                                     }
                                 }
                                 if (j == movie_ids.length) {
-                                    System.out.println("Movie Not Found!!!!!!!!!!!!");
+                                    Toast.makeText(CinemaDetailActivity.this, "Movie Not Found!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -188,6 +183,4 @@ public class CinemaDetailActivity extends AppCompatActivity {
             }
         }).start();
     }
-
-
 }
