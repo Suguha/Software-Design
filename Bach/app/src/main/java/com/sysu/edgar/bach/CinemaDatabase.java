@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 /**
- * Created by B402 on 2016/7/14.
+ * Created by Edgar on 2016/7/14.
  */
 public class CinemaDatabase {
 

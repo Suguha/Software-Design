@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by B402 on 2016/7/12.
+ * Created by Edgar on 2016/7/12.
  */
 public class MoviesFragment extends Fragment {
 
@@ -25,6 +28,8 @@ public class MoviesFragment extends Fragment {
 
     private Handler handler_movies = new Handler();
     private Runnable runnable_movies = null;
+
+    private MySimpleAdapter mySimpleAdapter;
 
     public MovieDatabase movieDatabase;
 
@@ -38,10 +43,10 @@ public class MoviesFragment extends Fragment {
             @Override
             public void run() {
                 if (dataList.size() == movieDatabase.length && movieDatabase.length != 0) {
-                    MySimpleAdapter mySimpleAdapter = new MySimpleAdapter(getContext(), dataList, R.layout.movies_item_form,
+                    listView.setVisibility(View.VISIBLE);
+                    mySimpleAdapter = new MySimpleAdapter(getContext(), dataList, R.layout.movies_item_form,
                             new String[] {"ItemImage", "ItemTitle", "ItemScore"},
                             new int[] {R.id.movie_image, R.id.movie_title, R.id.movie_score_number});
-                    mySimpleAdapter.setBMImages(movieDatabase.images);
                     mySimpleAdapter.setMoviesFragment(MoviesFragment.this);
                     listView.setAdapter(mySimpleAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,6 +69,7 @@ public class MoviesFragment extends Fragment {
                     });
                 } else {
                     handler_movies.post(this);
+                    listView.setVisibility(View.INVISIBLE);
                     dataList.clear();
                     for (int i = 0; i < movieDatabase.length; i++) {
                         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -72,7 +78,7 @@ public class MoviesFragment extends Fragment {
                         map.put("ItemScore", movieDatabase.scores[i]);
                         dataList.add(map);
                     }
-                    handler_movies.post(this);
+                    handler_movies.postDelayed(this, 5 * 1000);
                 }
             }
         };

@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by B402 on 2016/7/12.
+ * Created by Edgar on 2016/7/12.
  */
 public class CinemaFragment extends Fragment {
 
@@ -91,6 +91,7 @@ public class CinemaFragment extends Fragment {
                 try {
                     if (dataArrayList.size() == cinemaDatabase.length && movieDatabase.length != 0
                             && cinemaDatabase.length != 0) {
+                        listView.setVisibility(View.VISIBLE);
                         simpleAdapter = new SimpleAdapter(getActivity(), dataArrayList, R.layout.cinema_item_form,
                                 new String[]{"ItemName", "ItemAddress", "ItemTel"},
                                 new int[]{R.id.cinema_item_name, R.id.cinema_item_address, R.id.cinema_item_telephone});
@@ -124,7 +125,7 @@ public class CinemaFragment extends Fragment {
                         });
                     } else {
                         handler_cinema.post(this);
-                        Thread.sleep(1000);
+                        listView.setVisibility(View.INVISIBLE);
                         dataArrayList.clear();
                         for (int i = 0; i < cinemaDatabase.length; i++) {
                             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -133,21 +134,18 @@ public class CinemaFragment extends Fragment {
                             map.put("ItemTel", cinemaDatabase.tels[i]);
                             dataArrayList.add(map);
                         }
-                        handler_cinema.post(this);
+                        handler_cinema.postDelayed(this, 5 * 1000);
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
-                    handler_cinema.postDelayed(this, 2 * 1000);
+                    handler_cinema.postDelayed(this, 5 * 1000);
                 } catch (IndexOutOfBoundsException e1) {
                     e1.printStackTrace();
-                    handler_cinema.postDelayed(this, 2 * 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    handler_cinema.postDelayed(this, 5 * 1000);
                 }
-
             }
         };
-        handler_cinema.postDelayed(runnable_cinema, 5 * 1000);
+        handler_cinema.postDelayed(runnable_cinema, 7 * 1000);
         return cinema_view;
     }
 

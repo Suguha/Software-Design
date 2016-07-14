@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white_100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13:00"
+                android:textSize="20sp"
+                android:textColor="@color/black_87"
+                android:textAlignment="center"/>
+
+            <TextView android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="14:00结束"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/language_and_effect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="国语3D"
+            android:textSize="16sp"
+            android:textColor="@color/black_87"
+            android:gravity="center"/>
+
+        <TextView android:id="@+id/playing_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2号厅"
+            android:textSize="16sp"
+            android:textColor="@color/black_87"
+            android:gravity="center"/>
+
+        <TextView android:id="@+id/ticket_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="48元"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_100"
+            android:background="@drawable/switch_tabs_selector"
+            android:text="选座购票"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_12"/>
+
+</LinearLayout>

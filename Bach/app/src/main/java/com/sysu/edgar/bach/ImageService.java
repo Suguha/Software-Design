@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by B402 on 2016/7/11.
+ * Created by Edgar on 2016/7/11.
  */
 public class ImageService {
 

@@ -81,27 +81,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_search:
-                Toast.makeText(MainActivity.this, "Hello Search", Toast.LENGTH_SHORT).show();
-                break;
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void setFragments() {
         fragments.clear();
         fragments.add(moviesFragment);

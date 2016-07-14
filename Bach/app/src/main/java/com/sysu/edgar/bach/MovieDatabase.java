@@ -11,7 +11,7 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by B402 on 2016/7/13.
+ * Created by Edgar on 2016/7/13.
  */
 public class MovieDatabase {
 
@@ -47,7 +47,6 @@ public class MovieDatabase {
     }
 
     public MovieDatabase(final String urlPath) {
-//        final CountDownLatch latch = new CountDownLatch(1);
         System.out.println("Loading movies...");
         new Thread(new Runnable() {
             @Override
@@ -75,9 +74,6 @@ public class MovieDatabase {
                         ids[i] = object.getString("id");
                         descriptions[i] = object.getString("description");
                         imgUrls[i] = object.getString("img");
-//                        System.out.println(object.getString("img"));
-//                        Bitmap bitmap = ImageService.getBitmapFromUrl(object.getString("img"));
-//                        images[i] = bitmap;
                     }
                     System.out.println("Load movies complete...");
                 } catch (SocketTimeoutException ee) {
@@ -86,15 +82,11 @@ public class MovieDatabase {
                     e1.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (NullPointerException e2) {
+                    e2.printStackTrace();
                 }
-//                latch.countDown();
             }
         }).start();
-//        try {
-//            latch.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }

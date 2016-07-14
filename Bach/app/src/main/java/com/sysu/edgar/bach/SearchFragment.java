@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by B402 on 2016/7/12.
+ * Created by Edgar on 2016/7/12.
  */
 public class SearchFragment extends Fragment {
     @Nullable

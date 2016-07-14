@@ -18,10 +18,8 @@ import java.util.Map;
  * Created by Edgar on 2016/7/7.
  */
 public class MySimpleAdapter extends SimpleAdapter {
-    private Bitmap[] HHImages;
-    private Context mContex = null;
     private MoviesFragment moviesFragment = null;
-
+    private Bitmap[] images;
     /**
      * Constructor
      *
@@ -38,17 +36,16 @@ public class MySimpleAdapter extends SimpleAdapter {
      */
     public MySimpleAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
-        mContex = context;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
-        final ImageView imageView = (ImageView)view.findViewById(R.id.movie_image);
-//        if (HHImages.length != 0) {
-//            imageView.setImageBitmap(HHImages[position]);
-//        }
         Button btn = (Button) view.findViewById(R.id.btn_buy_tickets);
+        ImageView imageView = (ImageView)view.findViewById(R.id.movie_image);
+        if (images != null) {
+            imageView.setImageBitmap(images[position]);
+        }
         btn.setTag(position);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +59,11 @@ public class MySimpleAdapter extends SimpleAdapter {
         });
         return view;
     }
-    public void setBMImages(Bitmap[] b) {
-        this.HHImages = b;
-    }
     public void setMoviesFragment(MoviesFragment f) {
         this.moviesFragment = f;
+    }
+
+    public void setImages(Bitmap[] b) {
+        this.images = b;
     }
 }

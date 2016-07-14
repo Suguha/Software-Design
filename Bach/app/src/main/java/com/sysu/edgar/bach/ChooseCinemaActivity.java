@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by B402 on 2016/7/14.
+ * Created by Edgar on 2016/7/14.
  */
 public class ChooseCinemaActivity extends AppCompatActivity {
     public CinemaDatabase cinemaDatabase = null;
@@ -94,6 +94,7 @@ public class ChooseCinemaActivity extends AppCompatActivity {
             public void run() {
                 try {
                     if (dataArrayList.size() == cinemaDatabase.length && cinemaDatabase.length != 0) {
+                        listView.setVisibility(View.VISIBLE);
                         simpleAdapter = new SimpleAdapter(ChooseCinemaActivity.this, dataArrayList, R.layout.cinema_item_form,
                                 new String[]{"ItemName", "ItemAddress", "ItemTel"},
                                 new int[]{R.id.cinema_item_name, R.id.cinema_item_address, R.id.cinema_item_telephone});
@@ -107,7 +108,7 @@ public class ChooseCinemaActivity extends AppCompatActivity {
                         });
                     } else {
                         handler_cinema.post(this);
-//                        Thread.sleep(1000);
+                        listView.setVisibility(View.INVISIBLE);
                         dataArrayList.clear();
                         for (int i = 0; i < cinemaDatabase.length; i++) {
                             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -116,7 +117,7 @@ public class ChooseCinemaActivity extends AppCompatActivity {
                             map.put("ItemTel", cinemaDatabase.tels[i]);
                             dataArrayList.add(map);
                         }
-                        handler_cinema.post(this);
+                        handler_cinema.postDelayed(this, 5 * 1000);
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
