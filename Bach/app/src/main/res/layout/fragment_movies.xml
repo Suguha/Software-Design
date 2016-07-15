@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView android:id="@+id/loading_movies_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Loading Movies..."
+        android:textSize="24sp"
+        android:textColor="@color/black_54"
+        android:gravity="center" />
+
     <ListView android:id="@+id/movies_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

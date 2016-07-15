@@ -1,10 +1,13 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Network;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -14,13 +17,15 @@ import java.net.URL;
  */
 public class ImageService {
 
-    public static Bitmap getBitmapFromUrl(String urlPath) throws IOException {
+    private final static String ALBUM_PATH = Environment.getExternalStorageDirectory() + "/Download/Bach/";
+
+    public static Bitmap getBitmapFromUrl(String urlPath) throws Exception {
         byte[] data = getImage(urlPath);
         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         return bitmap;
     }
 
-    public static byte[] getImage(String urlPath) throws IOException {
+    private static byte[] getImage(String urlPath) throws Exception {
         URL url = new URL(urlPath);
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod("GET");
@@ -30,7 +35,7 @@ public class ImageService {
         return data;
     }
 
-    private static byte[] readInputStream(InputStream inputStream) throws IOException {
+    private static byte[] readInputStream(InputStream inputStream) throws Exception {
         byte[] buffer = new byte[1024];
         int len = 0;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -41,4 +46,15 @@ public class ImageService {
         return bos.toByteArray();
     }
 
+    public static void saveImage(Bitmap bitmap, String filename) throws Exception {
+        File dir = new File(ALBUM_PATH);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        File myFile = new File(ALBUM_PATH + filename);
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myFile));
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        bos.flush();
+        bos.close();
+    }
 }

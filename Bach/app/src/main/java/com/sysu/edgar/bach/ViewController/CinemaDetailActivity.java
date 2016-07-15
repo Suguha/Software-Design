@@ -1,8 +1,7 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.ViewController;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,17 +12,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sysu.edgar.bach.Adapter.MyTabPagerAdapter;
+import com.sysu.edgar.bach.Network.ImageService;
+import com.sysu.edgar.bach.R;
+import com.sysu.edgar.bach.ViewController.Fragments.SessionFragment;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
 /**
@@ -141,52 +144,57 @@ public class CinemaDetailActivity extends AppCompatActivity {
             runnable_scroll = new Runnable() {
                 @Override
                 public void run() {
-                    if (scrollImages.size() != jsonArray.length() || jsonArray == null) {
-                        horizontal_scroll.setVisibility(View.INVISIBLE);
-                        handler_scroll.postDelayed(this, 5 * 1000);
-                    } else {
-                        loading_text.setVisibility(View.GONE);
-                        horizontal_scroll.setVisibility(View.VISIBLE);
-                        for (int i = 0; i < film_ids.length; i++) {
-                            View view = new View(getBaseContext());
-                            view = getLayoutInflater().inflate(R.layout.horizontal_scroll_item_form, null, false);
-                            TextView title = (TextView)view.findViewById(R.id.scroll_item_title);
-                            ImageView image = (ImageView)view.findViewById(R.id.scroll_item_image);
-                            title.setText(film_titles[i]);
-                            final String temp = film_ids[i];
-                            try {
-                                image.setImageBitmap(scrollImages.get(i));
-                            } catch (IndexOutOfBoundsException e) {
-                                e.printStackTrace();
-                            }
-                            final View finalView = view;
-                            view.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    finalView.setBackground(getResources().getDrawable(R.color.colorAccent));
-                                    if (last_click_view != null) {
-                                        last_click_view.setBackground(getResources().getDrawable(R.drawable.item_click_selector));
-                                    }
-                                    last_click_view = finalView;
-                                    int j;
-                                    for (j = 0; j < movie_ids.length; j++) {
-                                        if (movie_ids[j].equals(temp)) {
-                                            position = j;
-                                            select_title.setText(movie_titles[j]);
-                                            select_score.setText(movie_scores[j] + "分");
-                                            select_tl.setText(movie_time_languages[j]);
-                                            detail_item_layout.setVisibility(View.VISIBLE);
-                                            break;
+                    try {
+                        if (scrollImages.size() != jsonArray.length() || jsonArray == null) {
+                            horizontal_scroll.setVisibility(View.INVISIBLE);
+                            handler_scroll.postDelayed(this, 5 * 1000);
+                        } else {
+                            loading_text.setVisibility(View.GONE);
+                            horizontal_scroll.setVisibility(View.VISIBLE);
+                            for (int i = 0; i < film_ids.length; i++) {
+                                View view = new View(getBaseContext());
+                                view = getLayoutInflater().inflate(R.layout.horizontal_scroll_item_form, null, false);
+                                TextView title = (TextView)view.findViewById(R.id.scroll_item_title);
+                                ImageView image = (ImageView)view.findViewById(R.id.scroll_item_image);
+                                title.setText(film_titles[i]);
+                                final String temp = film_ids[i];
+                                try {
+                                    image.setImageBitmap(scrollImages.get(i));
+                                } catch (IndexOutOfBoundsException e) {
+                                    e.printStackTrace();
+                                }
+                                final View finalView = view;
+                                view.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        finalView.setBackground(getResources().getDrawable(R.color.colorAccent));
+                                        if (last_click_view != null) {
+                                            last_click_view.setBackground(getResources().getDrawable(R.drawable.item_click_selector));
+                                        }
+                                        last_click_view = finalView;
+                                        int j;
+                                        for (j = 0; j < movie_ids.length; j++) {
+                                            if (movie_ids[j].equals(temp)) {
+                                                position = j;
+                                                select_title.setText(movie_titles[j]);
+                                                select_score.setText(movie_scores[j] + "分");
+                                                select_tl.setText(movie_time_languages[j]);
+                                                detail_item_layout.setVisibility(View.VISIBLE);
+                                                break;
+                                            }
+                                        }
+                                        if (j == movie_ids.length) {
+                                            Toast.makeText(CinemaDetailActivity.this, "Movie Not Found!", Toast.LENGTH_SHORT).show();
+                                            detail_item_layout.setVisibility(View.INVISIBLE);
                                         }
                                     }
-                                    if (j == movie_ids.length) {
-                                        Toast.makeText(CinemaDetailActivity.this, "Movie Not Found!", Toast.LENGTH_SHORT).show();
-                                        detail_item_layout.setVisibility(View.INVISIBLE);
-                                    }
-                                }
-                            });
-                            horizontal_scroll.addView(view, i);
+                                });
+                                horizontal_scroll.addView(view, i);
+                            }
                         }
+                    } catch (NullPointerException ek) {
+                        Toast.makeText(CinemaDetailActivity.this, "Empty movie list!", Toast.LENGTH_SHORT).show();
+                        ek.printStackTrace();
                     }
                 }
             };
@@ -226,10 +234,10 @@ public class CinemaDetailActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (movies.length() != 0) {
-//                    movies.replace("\\", "");
-                    System.out.println(movies);
+                    movies.replaceAll("\\\\", "");
+                    System.out.println("1" + movies);
                     movies = "[{\"filmName\":\"忍者神龟2：破影而出\",\"filmId\":\"201606791406\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1464665137218.jpg\"},{\"filmName\":\"惊天魔盗团2\",\"filmId\":\"201606271308\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1463455738720.jpg\"},{\"filmName\":\"独立日：卷土重来\",\"filmId\":\"201606935475\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1463456281417.jpg\"},{\"filmName\":\"赏金猎人\",\"filmId\":\"201606833006\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1464852605744.jpg\"},{\"filmName\":\"所以……和黑粉结婚了\",\"filmId\":\"201606148706\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1466480524309.jpg\"},{\"filmName\":\"海底总动员2：多莉去哪儿\",\"filmId\":\"201511987206\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1466143965872.jpg\"},{\"filmName\":\"寒战2\",\"filmId\":\"201611751807\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1461575078160.jpg\"},{\"filmName\":\"致青春·原来你还在这里\",\"filmId\":\"201607539706\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1441529928100.jpg\"},{\"filmName\":\"三人行\",\"filmId\":\"201606771306\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1464919579548.jpg\"},{\"filmName\":\"大鱼海棠\",\"filmId\":\"201511532406\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1461121433063.jpg\"},{\"filmName\":\"摇滚藏獒\",\"filmId\":\"201607213006\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1460970961465.jpg\"}]";
-                    System.out.println(movies);
+                    System.out.println("2" + movies);
                     try {
                         jsonArray = new JSONArray(movies);
                         film_titles = new String[jsonArray.length()];
@@ -244,9 +252,9 @@ public class CinemaDetailActivity extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     } catch (IndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

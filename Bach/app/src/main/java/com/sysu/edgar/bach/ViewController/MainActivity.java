@@ -1,24 +1,26 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.ViewController;
 
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.sysu.edgar.bach.Adapter.MyPagerAdapter;
+import com.sysu.edgar.bach.R;
+import com.sysu.edgar.bach.ViewController.Fragments.CinemaFragment;
+import com.sysu.edgar.bach.ViewController.Fragments.MoviesFragment;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MoviesFragment moviesFragment = new MoviesFragment();;
-    private CinemaFragment cinemaFragment = new CinemaFragment();
+    private MoviesFragment moviesFragment;
+    private CinemaFragment cinemaFragment;
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     public MyPagerAdapter myPagerAdapter = null;
     private ViewPager viewPager = null;
@@ -28,11 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageView cinema_img;
     private LinearLayout bottom_btn_movies;
     private LinearLayout bottom_btn_cinemas;
+    private Handler handler_download = new Handler();
+    private Runnable runnable_download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        moviesFragment = new MoviesFragment();
+        cinemaFragment = new CinemaFragment();
 
         movie_text = (TextView)this.findViewById(R.id.bottom_text_movies);
         cinema_text = (TextView)this.findViewById(R.id.bottom_text_cinemas);
@@ -81,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        handler_download.removeCallbacks(runnable_download);
+        super.onDestroy();
+    }
+
     private void setFragments() {
         fragments.clear();
         fragments.add(moviesFragment);
@@ -96,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 cinema_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_cinema_black_24dp));
                 bottom_btn_movies.setBackground(getResources().getDrawable(R.color.colorPrimaryDark));
                 bottom_btn_cinemas.setBackground(getResources().getDrawable(R.drawable.switch_tabs_selector));
-                moviesFragment.refreshMovies();
+//                moviesFragment.refreshMovies();
                 break;
 
             case 1:
@@ -113,4 +125,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
 }

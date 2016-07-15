@@ -1,10 +1,11 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Cache;
+
+import com.sysu.edgar.bach.Network.JsonParse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 /**
@@ -22,6 +23,7 @@ public class CinemaDatabase {
     public String[] cinemaIds;
     public String[] tels;
     public int length = 0;
+    public int count = 0;
     private JSONArray jsonArray;
 
     public CinemaDatabase() {
@@ -29,10 +31,10 @@ public class CinemaDatabase {
     }
 
     public CinemaDatabase(final String urlPath) {
-        System.out.println("Loading cinemas...");
         new Thread(new Runnable() {
             @Override
             public void run() {
+                System.out.println("Loading cinemas...");
                 try {
                     jsonArray = JsonParse.getJsonArray(urlPath);
                     length = jsonArray.length();
@@ -57,14 +59,15 @@ public class CinemaDatabase {
                         urls[i] = object.getString("url");
                         cinemaIds[i] = object.getString("cinemaId");
                         tels[i] = object.getString("tel");
+                        count++;
                     }
                     System.out.println("Load cinemas complete...");
                 } catch (SocketTimeoutException e1) {
                     e1.printStackTrace();
-                } catch (IOException e3) {
-                    e3.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (Exception e3) {
+                    e3.printStackTrace();
                 }
             }
         }).start();
@@ -81,6 +84,7 @@ public class CinemaDatabase {
         this.cinemaIds = other.cinemaIds;
         this.tels = other.tels;
         this.length = other.length;
+        this.count = other.count;
     }
 
 }

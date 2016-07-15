@@ -1,20 +1,23 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.ViewController;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
+
+import com.sysu.edgar.bach.R;
 
 /**
  * Created by Edgar on 2016/7/11.
  */
 public class MovieDetailActivity extends AppCompatActivity {
+    private final static String ALBUM_PATH = Environment.getExternalStorageDirectory() + "/Download/Bach/";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.MyThemeStyle);
@@ -47,24 +50,13 @@ public class MovieDetailActivity extends AppCompatActivity {
             movie_on_time.setText(bundle.getString("ItemOnTime"));
             movie_actors.setText(bundle.getString("ItemActors"));
             movie_description.setText(bundle.getString("ItemDescription"));
+            final String movie_id = bundle.getString("ItemId");
             final String url = bundle.getString("ItemUrl");
-            final CountDownLatch latch = new CountDownLatch(1);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Bitmap bitmap = ImageService.getBitmapFromUrl(url);
-                        movie_image.setImageBitmap(bitmap);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    latch.countDown();
-                }
-            }).start();
             try {
-                latch.await();
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
+                Bitmap bitmap = BitmapFactory.decodeFile(ALBUM_PATH + movie_id + ".png");
+                movie_image.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

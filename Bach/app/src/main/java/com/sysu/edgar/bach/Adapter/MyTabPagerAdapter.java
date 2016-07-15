@@ -1,4 +1,4 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

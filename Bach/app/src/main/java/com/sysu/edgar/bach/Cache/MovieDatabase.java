@@ -1,14 +1,18 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Cache;
 
 import android.graphics.Bitmap;
+import android.os.Handler;
+
+import com.sysu.edgar.bach.Network.ImageService;
+import com.sysu.edgar.bach.Network.JsonParse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Edgar on 2016/7/13.
@@ -27,6 +31,10 @@ public class MovieDatabase {
     public String[] imgUrls;
     private JSONArray jsonArray;
     public int length = 0;
+    public int count = 0;
+    public int count_imgs = 0;
+    private Handler handler_download = new Handler();
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public MovieDatabase(MovieDatabase other) {
         this.titles = other.titles;
@@ -40,6 +48,7 @@ public class MovieDatabase {
         this.imgUrls = other.imgUrls;
         this.images = other.images;
         this.length = other.length;
+        this.count = other.count;
     }
 
     public MovieDatabase() {
@@ -47,10 +56,11 @@ public class MovieDatabase {
     }
 
     public MovieDatabase(final String urlPath) {
-        System.out.println("Loading movies...");
-        new Thread(new Runnable() {
+
+        Runnable thread_1 = new Runnable() {
             @Override
             public void run() {
+                System.out.println("Loading movies...");
                 try {
                     jsonArray = JsonParse.getJsonArray(urlPath);
                     length = jsonArray.length();
@@ -74,19 +84,52 @@ public class MovieDatabase {
                         ids[i] = object.getString("id");
                         descriptions[i] = object.getString("description");
                         imgUrls[i] = object.getString("img");
+                        count++;
                     }
                     System.out.println("Load movies complete...");
                 } catch (SocketTimeoutException ee) {
                     ee.printStackTrace();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (NullPointerException e2) {
                     e2.printStackTrace();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
             }
-        }).start();
+        };
+
+        Runnable thread_2 = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("!!!!!!!!!Count: " + count + " Length: " + length);
+                    if (count == length && length != 0) {
+                        System.out.println("Downloading images...");
+                        for (int i = 0; i < count; i++) {
+                            try {
+                                Bitmap bitmap = ImageService.getBitmapFromUrl(imgUrls[i]);
+                                ImageService.saveImage(bitmap, ids[i] + ".png");
+                                count_imgs++;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        System.out.println("Download images complete...");
+                    } else {
+                        handler_download.postDelayed(this, 5 * 1000);
+                    }
+                } catch (NullPointerException eee) {
+                    eee.printStackTrace();
+                }
+            }
+        };
+
+        executorService.execute(thread_1);
+        executorService.execute(thread_2);
+
+        executorService.shutdown();
+
     }
 
 }

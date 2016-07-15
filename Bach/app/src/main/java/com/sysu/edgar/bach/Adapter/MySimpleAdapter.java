@@ -1,16 +1,16 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
-import java.util.ArrayList;
+import com.sysu.edgar.bach.R;
+import com.sysu.edgar.bach.ViewController.Fragments.MoviesFragment;
+
 import java.util.List;
 import java.util.Map;
 

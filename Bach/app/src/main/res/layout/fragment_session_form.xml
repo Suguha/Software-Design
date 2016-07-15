@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Loading sessions..."
+        android:text="Loading Sessions..."
         android:textSize="24sp"
         android:textColor="@color/black_54"/>
 

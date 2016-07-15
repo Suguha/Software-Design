@@ -1,4 +1,4 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.ViewController.Fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.sysu.edgar.bach.R;
+import com.sysu.edgar.bach.ViewController.SessionItems;
 
 /**
  * Created by Edgar on 2016/7/14.

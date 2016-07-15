@@ -1,4 +1,4 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +13,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> fragments;
 
-    MyPagerAdapter(FragmentManager fragmentManager, ArrayList<Fragment> fragments) {
+    public MyPagerAdapter(FragmentManager fragmentManager, ArrayList<Fragment> fragments) {
         super(fragmentManager);
         this.fragments = fragments;
     }

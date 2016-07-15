@@ -1,10 +1,9 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.Network;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -20,7 +19,7 @@ public class JsonParse {
      * @return mlists
      * @throws Exception
      */
-    public static JSONArray getJsonArray(String urlPath) throws IOException {
+    public static JSONArray getJsonArray(String urlPath) throws Exception {
         byte[] data = readParse(urlPath);
         JSONArray array = null;
         try {
@@ -38,7 +37,7 @@ public class JsonParse {
      * @return 字节数组
      * @throws Exception
      */
-    private static byte[] readParse(String urlPath) throws IOException {
+    private static byte[] readParse(String urlPath) throws Exception {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         byte[] data = new byte[1024];
         int len = 0;

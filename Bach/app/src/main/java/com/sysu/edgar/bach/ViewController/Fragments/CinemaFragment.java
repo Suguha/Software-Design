@@ -1,4 +1,4 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.ViewController.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,16 +9,20 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.sysu.edgar.bach.Cache.CinemaDatabase;
+import com.sysu.edgar.bach.Cache.MovieDatabase;
+import com.sysu.edgar.bach.R;
+import com.sysu.edgar.bach.ViewController.CinemaDetailActivity;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -29,16 +33,18 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Edgar on 2016/7/14.
+ * Created by Edgar on 2016/7/12.
  */
-public class ChooseCinemaActivity extends AppCompatActivity {
+public class CinemaFragment extends Fragment {
+
+    public MovieDatabase movieDatabase = new MovieDatabase();
     public CinemaDatabase cinemaDatabase = null;
 
     private ListView listView = null;
     private String requestURL = "http://119.29.144.22:8001/api/cinema?qu=";
-    private String BASE_URL = "http://119.29.144.22:8001/api/cinema?movieId=";
-    private String movieIdFromButton = "";
+    private final String BASE_URL = "http://119.29.144.22:8001/api/cinema?qu=";
     private ArrayList<HashMap<String, Object>> dataArrayList = new ArrayList<HashMap<String, Object>>();
+    private ArrayList<HashMap<String, Object>> dataBuffer = new ArrayList<HashMap<String, Object>>();
     private SimpleAdapter simpleAdapter;
     private LinearLayout locationLayout = null;
     private LocationManager locationManager = null;
@@ -48,34 +54,26 @@ public class ChooseCinemaActivity extends AppCompatActivity {
     private String subLocality;
     Geocoder geo = null;
     private TextView locationText;
+    private TextView loading_text;
 
     private Handler handler_cinema = new Handler();
     private Runnable runnable_cinema = null;
+    private Handler handler_download = new Handler();
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.MyThemeStyle);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_cinema);
-
-        Bundle bundle = getIntent().getExtras();
-        movieIdFromButton = bundle.getString("MovieId");
-
-        listView = (ListView)this.findViewById(R.id.cinema_listview);
-        geo = new Geocoder(this, Locale.CHINA);
-        locationLayout = (LinearLayout)this.findViewById(R.id.cinema_location_display);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        View cinema_view = inflater.inflate(R.layout.fragment_cinemas, container, false);
+        loading_text = (TextView)cinema_view.findViewById(R.id.loading_cinemas_text);
+        loading_text.setVisibility(View.VISIBLE);
+        context = getContext();
+        listView = (ListView) cinema_view.findViewById(R.id.cinema_listview);
+        geo = new Geocoder(getContext(), Locale.CHINA);
+        locationLayout = (LinearLayout)cinema_view.findViewById(R.id.cinema_location_display);
         locationText = (TextView)locationLayout.findViewById(R.id.location_text);
-        locationManager = (LocationManager)this.getSystemService(context.LOCATION_SERVICE);
+        locationManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
         setLocation();
         setData();
-
-        ImageButton btn_back = (ImageButton)this.findViewById(R.id.about_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         locationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +91,11 @@ public class ChooseCinemaActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    if (dataArrayList.size() == cinemaDatabase.length && cinemaDatabase.length != 0) {
+                    if (dataArrayList.size() == cinemaDatabase.length && movieDatabase.length != 0
+                            && cinemaDatabase.length != 0 && cinemaDatabase.count == cinemaDatabase.length) {
+                        loading_text.setVisibility(View.GONE);
                         listView.setVisibility(View.VISIBLE);
-                        simpleAdapter = new SimpleAdapter(ChooseCinemaActivity.this, dataArrayList, R.layout.cinema_item_form,
+                        simpleAdapter = new SimpleAdapter(getActivity(), dataArrayList, R.layout.cinema_item_form,
                                 new String[]{"ItemName", "ItemAddress", "ItemTel"},
                                 new int[]{R.id.cinema_item_name, R.id.cinema_item_address, R.id.cinema_item_telephone});
                         listView.setAdapter(simpleAdapter);
@@ -103,36 +103,59 @@ public class ChooseCinemaActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 //to goto cinema detail activity;
-                                Toast.makeText(ChooseCinemaActivity.this, "Not finished yet!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent();
+                                intent.setClass(getActivity(), CinemaDetailActivity.class);
+                                intent.putExtra("CinemaName", cinemaDatabase.names[position]);
+                                intent.putExtra("CinemaLocation", cinemaDatabase.locations[position]);
+                                intent.putExtra("CinemaMovies", cinemaDatabase.movies[position]);
+                                intent.putExtra("CinemaTransport", cinemaDatabase.transports[position]);
+                                intent.putExtra("CinemaUrl", cinemaDatabase.urls[position]);
+                                intent.putExtra("CinemaId", cinemaDatabase.cinemaIds[position]);
+                                intent.putExtra("CinemaTel", cinemaDatabase.tels[position]);
+                                intent.putExtra("Index", position);
+
+                                intent.putExtra("DatabaseTitles", movieDatabase.titles);
+                                intent.putExtra("DatabaseActors", movieDatabase.actors);
+                                intent.putExtra("DatabaseTimeLanguages", movieDatabase.time_languages);
+                                intent.putExtra("DatabaseScores", movieDatabase.scores);
+                                intent.putExtra("DatabaseTypes", movieDatabase.types);
+                                intent.putExtra("DatabaseOnTimes", movieDatabase.on_times);
+                                intent.putExtra("DatabaseDescriptions", movieDatabase.descriptions);
+                                intent.putExtra("DatabaseIds", movieDatabase.ids);
+                                intent.putExtra("DatabaseImgUrls", movieDatabase.imgUrls);
+                                startActivity(intent);
                             }
                         });
                     } else {
-                        handler_cinema.post(this);
+                        loading_text.setVisibility(View.VISIBLE);
                         listView.setVisibility(View.INVISIBLE);
                         dataArrayList.clear();
-                        for (int i = 0; i < cinemaDatabase.length; i++) {
+                        for (int i = 0; i < cinemaDatabase.count; i++) {
                             HashMap<String, Object> map = new HashMap<String, Object>();
                             map.put("ItemName", cinemaDatabase.names[i]);
                             map.put("ItemAddress", cinemaDatabase.locations[i]);
                             map.put("ItemTel", cinemaDatabase.tels[i]);
                             dataArrayList.add(map);
                         }
-                        handler_cinema.postDelayed(this, 5 * 1000);
+                        handler_cinema.postDelayed(this, 1 * 1000);
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
-                    handler_cinema.postDelayed(this, 2 * 1000);
+                    handler_cinema.postDelayed(this, 3 * 1000);
                 } catch (IndexOutOfBoundsException e1) {
                     e1.printStackTrace();
-                    handler_cinema.postDelayed(this, 2 * 1000);
+                    handler_cinema.postDelayed(this, 3 * 1000);
                 }
             }
         };
         handler_cinema.postDelayed(runnable_cinema, 3 * 1000);
+
+        return cinema_view;
     }
 
     @Override
     public void onDestroy() {
+        System.out.println("Destroy Cinema Fragment!");
         handler_cinema.removeCallbacks(runnable_cinema);
         super.onDestroy();
     }
@@ -150,8 +173,7 @@ public class ChooseCinemaActivity extends AppCompatActivity {
             locationText.setText(provinceName + "," + localityName + "," + subLocalityName + "," + thoroughfareName);
             try {
                 subLocality = URLEncoder.encode(subLocalityName, "UTF-8");
-                requestURL = BASE_URL + movieIdFromButton + "&qu=" + subLocality;
-                System.out.println("!!!!!!!!!!request url: " + requestURL);
+                requestURL = BASE_URL + subLocality;
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {
@@ -159,13 +181,7 @@ public class ChooseCinemaActivity extends AppCompatActivity {
             }
         } else {
             locationText.setText(errorMsg);
-            try {
-                subLocality = URLEncoder.encode("白云", "UTF-8");
-                requestURL = BASE_URL + movieIdFromButton + "&qu=" + subLocality;
-                System.out.println("!!!!!!!!!!request url: " + requestURL);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            requestURL = BASE_URL;
         }
     }
 
@@ -191,5 +207,9 @@ public class ChooseCinemaActivity extends AppCompatActivity {
     private void refreshCinemaFragment() {
         handler_cinema.removeCallbacks(runnable_cinema);
         handler_cinema.post(runnable_cinema);
+    }
+
+    public void setMovieDataBase(MovieDatabase other) {
+        movieDatabase = new MovieDatabase(other);
     }
 }

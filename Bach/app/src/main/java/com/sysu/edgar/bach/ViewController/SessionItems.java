@@ -1,13 +1,12 @@
-package com.sysu.edgar.bach;
+package com.sysu.edgar.bach.ViewController;
+
+import com.sysu.edgar.bach.Network.JsonParse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Edgar on 2016/7/14.
@@ -62,9 +61,9 @@ public class SessionItems {
                     System.out.println("Load sessions complete!");
                 } catch (SocketTimeoutException e1) {
                     e1.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 //                latch.countDown();

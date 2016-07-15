@@ -5,6 +5,14 @@
     android:background="@color/white_100"
     android:orientation="vertical">
 
+    <TextView android:id="@+id/loading_cinemas_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Loading Cinemas..."
+        android:textColor="@color/black_54"
+        android:textSize="24sp"
+        android:gravity="center"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
