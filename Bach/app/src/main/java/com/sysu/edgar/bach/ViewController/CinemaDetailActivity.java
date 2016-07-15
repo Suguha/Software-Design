@@ -216,6 +216,7 @@ public class CinemaDetailActivity extends AppCompatActivity {
                         intent.putExtra("ItemActors", movie_actors[position]);
                         intent.putExtra("ItemDescription", movie_descriptions[position]);
                         intent.putExtra("ItemUrl", movie_image_urls[position]);
+                        intent.putExtra("ItemId", movie_ids[position]);
                         startActivity(intent);
                     }
                 }
