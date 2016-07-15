@@ -1,0 +1,68 @@
+# Server settings (ServerProperties)
+server:
+  port: 8001
+  address: 0.0.0.0
+  session:
+#    timeout: 30
+    persistent: true
+  contextPath: /api/
+
+  # Tomcat specifics
+  tomcat:
+    accessLogEnabled: true
+    protocolHeader: x-forwarded-proto
+    remoteIpHeader: x-forwarded-for
+    basedir:
+    backgroundProcessorDelay: 30 # secs
+
+# Spring settings
+spring: 
+  # Use mysql, name of database is "sekko"
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sekko?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    
+  jpa:
+    hibernate:
+      ddl-auto: "none" # 可以的取值有 ： none, validate, update, create, create-drop
+    show-sql: true
+  cache:
+    type: redis
+    
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-idle: 8 # pool settings ...  
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+    timeout: 0
+
+#  devtools:
+#    restart:
+#      enabled: false # 禁用热更新
+  
+#  http:
+#    encoding:
+#      charset: UTF-8
+
+# Security settings
+security: 
+  basic:
+    enabled: true
+#  user:
+#    name: secured
+#    password: foo
+
+endpoints: 
+  sensitive: true
+
+management:
+  security:
+    role: "admin"
+    enabled: true
+  context-path: "/manage"
+  
