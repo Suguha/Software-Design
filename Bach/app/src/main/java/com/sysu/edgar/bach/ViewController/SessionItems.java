@@ -28,7 +28,6 @@ public class SessionItems {
 
     public SessionItems(final String urlPath) {
         System.out.println("Loading sessions...");
-//        final CountDownLatch latch = new CountDownLatch(1);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -44,7 +43,6 @@ public class SessionItems {
                     languageAndEffects = new String[length];
                     playingRooms = new String[length];
                     prices = new String[length];
-
                     for (int i = 0; i < length; i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         dates[i] = object.getString("date");
@@ -66,13 +64,7 @@ public class SessionItems {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                latch.countDown();
             }
         }).start();
-//        try {
-//            latch.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 }

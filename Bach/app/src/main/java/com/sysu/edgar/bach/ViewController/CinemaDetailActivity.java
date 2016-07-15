@@ -235,10 +235,8 @@ public class CinemaDetailActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (movies.length() != 0) {
-                    movies.replaceAll("\\\\", "");
-                    System.out.println("1" + movies);
-                    movies = "[{\"filmName\":\"忍者神龟2：破影而出\",\"filmId\":\"201606791406\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1464665137218.jpg\"},{\"filmName\":\"惊天魔盗团2\",\"filmId\":\"201606271308\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1463455738720.jpg\"},{\"filmName\":\"独立日：卷土重来\",\"filmId\":\"201606935475\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1463456281417.jpg\"},{\"filmName\":\"赏金猎人\",\"filmId\":\"201606833006\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1464852605744.jpg\"},{\"filmName\":\"所以……和黑粉结婚了\",\"filmId\":\"201606148706\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1466480524309.jpg\"},{\"filmName\":\"海底总动员2：多莉去哪儿\",\"filmId\":\"201511987206\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1466143965872.jpg\"},{\"filmName\":\"寒战2\",\"filmId\":\"201611751807\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1461575078160.jpg\"},{\"filmName\":\"致青春·原来你还在这里\",\"filmId\":\"201607539706\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1441529928100.jpg\"},{\"filmName\":\"三人行\",\"filmId\":\"201606771306\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1464919579548.jpg\"},{\"filmName\":\"大鱼海棠\",\"filmId\":\"201511532406\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1461121433063.jpg\"},{\"filmName\":\"摇滚藏獒\",\"filmId\":\"201607213006\",\"filmPost\":\"http://pic.spider.com.cn/pic//filmpic/jdt/1460970961465.jpg\"}]";
-                    System.out.println("2" + movies);
+                    movies = movies.replaceAll("\\\\", "");
+                    movies = movies.substring(1, movies.length() - 1);
                     try {
                         jsonArray = new JSONArray(movies);
                         film_titles = new String[jsonArray.length()];
